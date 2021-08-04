@@ -11,8 +11,8 @@ Für die Implementierung wurde der Datensatz *Industrial Quality Control of Pack
 Die nachfolgenden Bilder zeigen die Draufsicht sowie die Seitenansicht einer der beschädigten Verpackungen.
 
 <p align="middle">
-  <img src="./data_sample/0915598067788_top.png" width="330" /> 
-  <img src="./data_sample/0915598067788_side.png" width="330" />
+  <img src="./data_sample/0915598067788_top.png" width="360" /> 
+  <img src="./data_sample/0915598067788_side.png" width="360" />
 </p>
 ## Ansatz
 Um den Datensatz für Federated Learning nutzen zu können, wurde dieser in drei lokale Subdatensätze à 120 Bilder aufgeteilt, welche jeweils zu gleichen Teilen aus intakten und beschädigten Verpackungen bestehen. Die verbliebenen 40 Bilder wurden als globaler Testdatensatz verwendet, um die Performance der einzelnen Modelle objektiv miteinander vergleichen zu können.
