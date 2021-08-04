@@ -14,6 +14,7 @@ Die nachfolgenden Bilder zeigen die Draufsicht sowie die Seitenansicht einer der
   <img src="./data_sample/0915598067788_top.png" width="360" /> 
   <img src="./data_sample/0915598067788_side.png" width="360" />
 </p>
+
 ## Ansatz
 Um den Datensatz für Federated Learning nutzen zu können, wurde dieser in drei lokale Subdatensätze à 120 Bilder aufgeteilt, welche jeweils zu gleichen Teilen aus intakten und beschädigten Verpackungen bestehen. Die verbliebenen 40 Bilder wurden als globaler Testdatensatz verwendet, um die Performance der einzelnen Modelle objektiv miteinander vergleichen zu können.
 
@@ -35,75 +36,25 @@ Die Implementierung des Federated Learning Ansatzes nutzt [Flower](https://githu
 Bevor die Python Programme ausgeführt werden können, müssen jedoch erst die erforderlichen Pakete installiert werden, welche in `requirements.txt` spezifiziert sind.
 
 ## Ergebnisse
+### Baselines
 In jedem Szenario wurde ein 80/20 Split der Daten in Trainings- und Validierungsdaten vorgenommen. Die folgende Tabelle zeigt die Accuracy der Baseline Modelle auf den jeweiligen Validierungsdatensätzen sowie dem globalen Testdatensatz. 
 
-<table>
-<thead>
-  <tr>
-
-    <th colspan="5" style="text-align: center">Baselines</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td style="text-align: center"></td>
-    <td style="text-align: center">Globales, zentralisiertes Modell</td>
-    <td style="text-align: center">Lokales Modell Client 1</td>
-    <td style="text-align: center">Lokales Modell Client 2</td>
-    <td style="text-align: center">Lokales Modell Client 3</td>
-  </tr>
-  <tr>
-     <td style="text-align: center">Accuracy auf jeweiligem Validierungsdatensatz</td>
-    <td style="text-align: center">75,00%</td>
-    <td style="text-align: center">45,83%</td>
-    <td style="text-align: center">58,33%</td>
-    <td style="text-align: center">75,00%</td>
-  </tr>
-  <tr>
-    <td style="text-align: center">Accuracy auf globalem Testdatensatz</td>
-    <td style="text-align: center">75,00%</td>
-    <td style="text-align: center">62,50%</td>
-    <td style="text-align: center">62,50%</td>
-    <td style="text-align: center">57,50%</td>
-  </tr>
-</tbody>
-</table>
+| | Globales, zentralisiertes Modell | Lokales Modell Client 1 |Lokales Modell Client 2 | Lokales Modell Client 3 |
+| :---: | :---: | :---: | :---: | :---: | 
+| **Accuracy auf jeweiligem Validierungsdatensatz** | 75,00% | 45,83% | 58,33% | 75,00% | 
+| **Accuracy auf globalem Testdatensatz** | 75,00% | 62,50% | 62,50% | 57,50% | 
 
 Aufgrund von Randomisierungen während des Trainings variieren die genauen Werte bei jeder Ausführung, weshalb für eine verlässlichere, statistische Auswertung der Performanz der Modelle mehrere Trainingsdurchläufe absolviert werden sollten. Dennoch lässt sich eine Tendenz erkennen, dass das globale, zentralisierte Modell ein besseres Ergebnis liefert als die lokalen Modelle der einzelnen Clients, welche beim Trainieren nur auf ihren jeweiligen Teil der verfügbaren Daten zugreifen können. Mit einer maximalen Accuracy von 75,00% zeigt sich jedoch, dass die Modelle Schwierigkeiten bei der zuverlässigen Erkennung von Beschädigungen der Verpackungen haben, was vermutlich auf die geringe Größe des Datensatzes zurückzuführen ist.
 
+### Federated Learning Ansatz
 Die nachfolgende Tabelle zeigt die Accuracy des Federated Learning Modells nach acht Runden auf den Validierungsdatensätzen der einzelnen Clients sowie dem globalen Testdatensatz.
 
-<table>
-<thead>
-  <tr>
-
-    <th colspan="2" style="text-align: center">Federated Learning</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td style="text-align: center"></td>
-    <td style="text-align: center">Federated Learning Modell</td>
-
-  </tr>
-  <tr>
-    <td style="text-align: center">Accuracy auf lokalem Validierungsdatensatz von Client 1</td>
-    <td style="text-align: center">70,83%</td>
-  </tr>
-  <tr>
-    <td style="text-align: center">Accuracy auf lokalem Validierungsdatensatz von Client 2</td>
-    <td style="text-align: center">62,50%</td>
-  </tr>
-  <tr>
-    <td style="text-align: center">Accuracy auf lokalem Validierungsdatensatz von Client 3</td>
-    <td style="text-align: center">87,50%</td>
-  </tr>
-  <tr>
-    <td style="text-align: center">Accuracy auf globalem Testdatensatz</td>
-    <td style="text-align: center">65,00%</td>
-  </tr>
-</tbody>
-</table>
+| | Federated Learning Modell | 
+| :---: | :---: |
+| **Accuracy auf lokalem Validierungsdatensatz von Client 1** | 70,83% |
+| **Accuracy auf lokalem Validierungsdatensatz von Client 2** | 62,50% |
+| **Accuracy auf lokalem Validierungsdatensatz von Client 3** | 87,50% |
+| **Accuracy auf globalem Testdatensatz** | 65,00% |
 
 Die Ergebnisse zeigen, dass das Federated Learning Modell nicht ganz an die Performanz des globalen, zentralisierten Modells herankommt, jedoch im Vergleich zu den lokal trainierten Modellen sowohl eine höhere Accuracy auf den lokalen Validierungsdatensätzen der einzelnen Clients als auch auf dem globalen Testdatensatz erzielen kann. 
 ## Diskussion
